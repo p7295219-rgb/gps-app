@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 
 <html>
@@ -7,7 +9,7 @@
 </head>
 <body>
 
-<h2>Enviando ubicación...</h2>
+<h2 id="estado">Enviando ubicación...</h2>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 
@@ -31,14 +33,18 @@ function enviarUbicacion(pos) {
   const lat = pos.coords.latitude;
   const lng = pos.coords.longitude;
 
+  document.getElementById("estado").innerText =
+    "Enviando: " + lat.toFixed(5) + ", " + lng.toFixed(5);
+
   db.ref("vehiculo1").push({
     lat: lat,
     lng: lng,
     time: Date.now()
   });
 }
-
-navigator.geolocation.watchPosition(enviarUbicacion);
+navigator.geolocation.watchPosition(pos => {
+  setTimeout(() => enviarUbicacion(pos), 5000);
+});
 </script>
 
 </body>
