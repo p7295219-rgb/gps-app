@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+<title>Enviar ubicación</title>
+</head>
+<body>
+
+<h2>Enviando ubicación...</h2>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyC1Pq3NXrmgT-O47XOFp6x2yy42yuFQvDI",
+  authDomain: "palmira-limpia.firebaseapp.com",
+  databaseURL: "https://palmira-limpia-default-rtdb.firebaseio.com/",
+  projectId: "palmira-limpia",
+  storageBucket: "palmira-limpia.firebasestorage.app",
+  messagingSenderId: "180840682422",
+  appId: "1:180840682422:web:1e22170efc313b39286717"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+function enviarUbicacion(pos) {
+  const lat = pos.coords.latitude;
+  const lng = pos.coords.longitude;
+
+  db.ref("vehiculo1").push({
+    lat: lat,
+    lng: lng,
+    time: Date.now()
+  });
+}
+
+navigator.geolocation.watchPosition(enviarUbicacion);
+</script>
+
+</body>
+</html>
