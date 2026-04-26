@@ -28,7 +28,10 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
+console.log("DB URL:", firebaseConfig.databaseURL);
 
+document.getElementById("estado").innerText =
+  "DB: " + firebaseConfig.databaseURL;
 function enviarUbicacion(pos) {
 
   var lat = pos.coords.latitude;
