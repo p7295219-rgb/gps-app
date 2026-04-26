@@ -37,21 +37,27 @@ function enviarUbicacion(pos) {
   var lat = pos.coords.latitude;
   var lng = pos.coords.longitude;
 
-  db.ref("vehiculo1").push({
-    lat: lat,
-    lng: lng,
-    time: Date.now()
+  fetch("https://palmira-limpia-default-rtdb.firebaseio.com/vehiculo1.json", {
+    method: "POST",
+    body: JSON.stringify({
+      lat: lat,
+      lng: lng,
+      time: Date.now()
+    })
   })
-  .then(() => {
-    console.log("ENVIADO OK");
+  .then(res => res.json())
+  .then(data => {
     document.getElementById("estado").innerText =
-      "ENVIADO OK: " + lat + " | " + lng;
+      "FETCH OK: " + lat + " | " + lng;
+    console.log("OK:", data);
   })
-  .catch((error) => {
-    console.log("ERROR FIREBASE:", error);
+  .catch(err => {
     document.getElementById("estado").innerText =
-      "ERROR: " + error;
+      "ERROR FETCH: " + err;
+    console.log("ERROR:", err);
   });
+
+}
 
 }
 navigator.geolocation.watchPosition(pos => {
