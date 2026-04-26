@@ -30,20 +30,29 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 
 function enviarUbicacion(pos) {
-  const lat = pos.coords.latitude;
-  const lng = pos.coords.longitude;
 
-  document.getElementById("estado").innerText =
-    "Enviando: " + lat.toFixed(5) + ", " + lng.toFixed(5);
+  var lat = pos.coords.latitude;
+  var lng = pos.coords.longitude;
 
   db.ref("vehiculo1").push({
     lat: lat,
     lng: lng,
     time: Date.now()
   });
+
+  console.log("Enviado:", lat, lng);
+
 }
 navigator.geolocation.watchPosition(pos => {
-  setTimeout(() => enviarUbicacion(pos), 5000);
+
+  enviarUbicacion(pos);
+
+}, error => {
+  console.log("Error GPS:", error);
+}, {
+  enableHighAccuracy: true,
+  maximumAge: 0,
+  timeout: 5000
 });
 </script>
 
