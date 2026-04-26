@@ -1,7 +1,4 @@
-
-
 <!DOCTYPE html>
-
 <html>
 <head>
 <meta charset="utf-8">
@@ -9,10 +6,9 @@
 </head>
 <body>
 
-<h2 id="estado">Enviando ubicación...</h2>
+<h2 id="estado">Iniciando...</h2>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
 <script>
@@ -28,60 +24,51 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
-console.log("DB URL:", firebaseConfig.databaseURL);
 
-document.getElementById("estado").innerText =
-  "DB: " + firebaseConfig.databaseURL;
-function enviarUbicacion(pos) {
+// función que obtiene y envía ubicación
+function obtenerYEnviar() {
 
-  var lat = pos.coords.latitude;
-  var lng = pos.coords.longitude;
+  navigator.geolocation.getCurrentPosition(
+    function(pos) {
 
-  fetch("https://palmira-limpia-default-rtdb.firebaseio.com/vehiculo1.json", {
-    method: "POST",
-    body: JSON.stringify({
-      lat: lat,
-      lng: lng,
-      time: Date.now()
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById("estado").innerText =
-      "FETCH OK: " + lat + " | " + lng;
-    console.log("OK:", data);
-  })
-  .catch(err => {
-    document.getElementById("estado").innerText =
-      "ERROR FETCH: " + err;
-    console.log("ERROR:", err);
-  });
+      var lat = pos.coords.latitude;
+      var lng = pos.coords.longitude;
+
+      db.ref("vehiculo1").push({
+        lat: lat,
+        lng: lng,
+        time: Date.now()
+      });
+
+      document.getElementById("estado").innerText =
+        "ENVIADO: " + lat + " | " + lng;
+
+      console.log("ENVIADO:", lat, lng);
+
+    },
+    function(error) {
+
+      console.log("ERROR GPS:", error);
+
+      document.getElementById("estado").innerText =
+        "ERROR GPS: " + error.message;
+
+    },
+    {
+      enableHighAccuracy: true,
+      maximumAge: 0,
+      timeout: 5000
+    }
+  );
 
 }
 
-}
-navigator.geolocation.watchPosition(
-  function(pos) {
+// ejecutar cada 5 segundos
+setInterval(obtenerYEnviar, 5000);
 
-    console.log("GPS OK");
+// ejecutar una vez al inicio
+obtenerYEnviar();
 
-    enviarUbicacion(pos);
-
-  },
-  function(error) {
-
-    console.log("ERROR GPS:", error);
-
-    document.getElementById("estado").innerText =
-      "ERROR GPS: " + error.message;
-
-  },
-  {
-    enableHighAccuracy: true,
-    maximumAge: 0,
-    timeout: 5000
-  }
-);
 </script>
 
 </body>
