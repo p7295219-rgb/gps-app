@@ -39,7 +39,8 @@ function enviarUbicacion(pos) {
     lng: lng,
     time: Date.now()
   });
-
+document.getElementById("estado").innerText =
+  "Lat: " + lat + " | Lng: " + lng;
   console.log("Enviado:", lat, lng);
 
 }
