@@ -60,17 +60,28 @@ function enviarUbicacion(pos) {
 }
 
 }
-navigator.geolocation.watchPosition(pos => {
+navigator.geolocation.watchPosition(
+  function(pos) {
 
-  enviarUbicacion(pos);
+    console.log("GPS OK");
 
-}, error => {
-  console.log("Error GPS:", error);
-}, {
-  enableHighAccuracy: true,
-  maximumAge: 0,
-  timeout: 5000
-});
+    enviarUbicacion(pos);
+
+  },
+  function(error) {
+
+    console.log("ERROR GPS:", error);
+
+    document.getElementById("estado").innerText =
+      "ERROR GPS: " + error.message;
+
+  },
+  {
+    enableHighAccuracy: true,
+    maximumAge: 0,
+    timeout: 5000
+  }
+);
 </script>
 
 </body>
