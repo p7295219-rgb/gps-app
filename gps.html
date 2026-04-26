@@ -38,10 +38,17 @@ function enviarUbicacion(pos) {
     lat: lat,
     lng: lng,
     time: Date.now()
+  })
+  .then(() => {
+    console.log("ENVIADO OK");
+    document.getElementById("estado").innerText =
+      "ENVIADO OK: " + lat + " | " + lng;
+  })
+  .catch((error) => {
+    console.log("ERROR FIREBASE:", error);
+    document.getElementById("estado").innerText =
+      "ERROR: " + error;
   });
-document.getElementById("estado").innerText =
-  "Lat: " + lat + " | Lng: " + lng;
-  console.log("Enviado:", lat, lng);
 
 }
 navigator.geolocation.watchPosition(pos => {
