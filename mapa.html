@@ -236,25 +236,43 @@ var polyline = L.polyline(path, {
 var iniciado = false;
 
 // 🔄 ESCUCHAR FIREBASE
+db.ref("vehiculo1").once("value", function(snapshot) {
+
+  path = [];
+
+  snapshot.forEach(function(child) {
+
+    var punto = child.val();
+
+    if (!punto.lat || !punto.lng) return;
+
+    path.push([punto.lat, punto.lng]);
+
+  });
+
+  polyline.setLatLngs(path);
+
+  if (path.length > 0) {
+    var ultimo = path[path.length - 1];
+    marker.setLatLng(ultimo);
+    map.setView(ultimo, 15);
+  }
+
+});
 db.ref("vehiculo1").on("child_added", function(snapshot) {
 
-  var data = snapshot.val();
+  var punto = snapshot.val();
 
-  if (!data || !data.lat || !data.lng) return;
+  if (!punto.lat || !punto.lng) return;
 
-  var latlng = [data.lat, data.lng];
+  var latlng = [punto.lat, punto.lng];
 
   path.push(latlng);
   polyline.setLatLngs(path);
 
-  if (!iniciado) {
-    map.setView(latlng, 15);
-    iniciado = true;
-  }
-
   marker.setLatLng(latlng);
 
-});
+});  
 </script>
 
 </body>
