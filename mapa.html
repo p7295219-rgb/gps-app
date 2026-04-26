@@ -259,20 +259,7 @@ db.ref("vehiculo1").once("value", function(snapshot) {
   }
 
 });
-db.ref("vehiculo1").on("child_added", function(snapshot) {
 
-  var punto = snapshot.val();
-
-  if (!punto.lat || !punto.lng) return;
-
-  var latlng = [punto.lat, punto.lng];
-
-  path.push(latlng);
-  polyline.setLatLngs(path);
-
-  marker.setLatLng(latlng);
-
-});  
 </script>
 
 </body>
