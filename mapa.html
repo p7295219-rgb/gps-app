@@ -54,10 +54,9 @@ var db = firebase.database();
 // 🗺️ MAPA
 var map = L.map('map').setView([-33.874, -58.416], 14);
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/voyager/{z}/{x}/{y}{r}.png', {
-  attribution: '© OpenStreetMap © CARTO',
-  subdomains: 'abcd',
-  maxZoom: 20
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors',
+    maxZoom: 20
 }).addTo(map);
 // 📍 MARCADOR
 var marker = L.marker([-33.874, -58.416]).addTo(map);
