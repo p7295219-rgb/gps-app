@@ -265,9 +265,12 @@ db.ref("vehiculo1").on("child_added", function(snapshot) {
 
 });
 L.marker([-33.879678777125434, -58.402283105240016], {
+  interactive: false,
   icon: L.divIcon({
     className: 'labelZona',
-    html: 'Zona.1'
+    html: '<div>Zona.1</div>',
+    iconSize: [120, 40],
+    iconAnchor: [60, 20]
   })
 }).addTo(map);
 
