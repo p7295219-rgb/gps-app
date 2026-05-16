@@ -260,7 +260,12 @@ db.ref("vehiculo1").on("child_added", function(snapshot) {
   marker.setLatLng(latlng);
 
   // centrar mapa
-  map.setView(latlng, 17);
+  if (!window.mapaCentrado) {
+
+    map.setView(latlng, 17);
+
+    window.mapaCentrado = true;
+}
 
 });
 L.marker([-33.879678777125434, -58.402283105240016], {
