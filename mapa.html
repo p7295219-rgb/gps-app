@@ -237,7 +237,12 @@ recorridosFijos.forEach(ruta => {
 
 });
 // 🔄 ESCUCHAR FIREBASE
-const fecha = new Date().toISOString().split('T')[0];
+const ahora = new Date();
+
+const fecha =
+    ahora.getFullYear() + "-" +
+    String(ahora.getMonth() + 1).padStart(2, '0') + "-" +
+    String(ahora.getDate()).padStart(2, '0');
 
 db.ref("vehiculo1/" + fecha).on("child_added", function(snapshot) {
 
