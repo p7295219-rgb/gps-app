@@ -237,7 +237,7 @@ recorridosFijos.forEach(ruta => {
 
 });
 // 🔄 ESCUCHAR FIREBASE
-const fecha = "2026-05-16";
+const fecha = "2026-05-17";
 db.ref("vehiculo1/" + fecha).on("child_added", function(snapshot) {
 
   var punto = snapshot.val();
