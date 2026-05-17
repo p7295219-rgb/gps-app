@@ -237,13 +237,7 @@ recorridosFijos.forEach(ruta => {
 
 });
 // 🔄 ESCUCHAR FIREBASE
-const ahora = new Date();
-
-const fecha =
-    ahora.getFullYear() + "-" +
-    String(ahora.getMonth() + 1).padStart(2, '0') + "-" +
-    String(ahora.getDate()).padStart(2, '0');
-
+const fecha = "2026-05-16";
 db.ref("vehiculo1/" + fecha).on("child_added", function(snapshot) {
 
   var punto = snapshot.val();
