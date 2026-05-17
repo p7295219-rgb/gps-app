@@ -253,7 +253,9 @@ db.ref("vehiculo1/" + fecha).on("child_added", function(snapshot) {
   ];
 
   // agregar punto al recorrido
-  path.push(latlng);
+  if (path.length > 5000) {
+    path.shift();
+}
 
   // actualizar línea
   polyline.setLatLngs(path);
