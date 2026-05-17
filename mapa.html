@@ -237,7 +237,9 @@ recorridosFijos.forEach(ruta => {
 
 });
 // 🔄 ESCUCHAR FIREBASE
-db.ref("vehiculo1").on("child_added", function(snapshot) {
+const fecha = new Date().toISOString().split('T')[0];
+
+db.ref("vehiculo1/" + fecha).on("child_added", function(snapshot) {
 
   var punto = snapshot.val();
 
