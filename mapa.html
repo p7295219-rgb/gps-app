@@ -250,7 +250,7 @@ db.ref("vehiculo1/" + fecha).on("child_added", function(snapshot) {
     punto.lat,
     punto.lng
   ];
-
+path.push(latlng);
   // agregar punto al recorrido
   if (path.length > 5000) {
     path.shift();
